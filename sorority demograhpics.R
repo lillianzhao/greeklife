@@ -3,6 +3,7 @@ setwd("/Users/lillianzhao/Documents/Data Science/greek life")
 rm(list = ls())
 library(tidyverse)
 library(plyr)
+library(dplyr)
 library(plotly)
 library(reshape2)
 library(stringr)
@@ -26,5 +27,8 @@ data2 <- rename(data, c("What.house.are.you.affiliated.with."="House", "Race.eth
 
 APhi <- filter(data2, House == "Alpha Phi")
 
-data3 <- group_by(data2, House) %>% 
-  summarise(avg = mean())
+APhi2 <- APhi %>% 
+  group_by(Race) %>% 
+  tally() %>% 
+  spread(Race, n)
+
