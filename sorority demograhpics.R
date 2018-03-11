@@ -1,0 +1,30 @@
+setwd("/Users/lillianzhao/Documents/Data Science/greek life")
+
+rm(list = ls())
+library(tidyverse)
+library(plyr)
+library(plotly)
+library(reshape2)
+library(stringr)
+
+data <- read.csv(file = "/Users/lillianzhao/Documents/Data Science/greek life/ISC Survey 17X.csv", 
+                 header = TRUE, sep = ",")
+
+## Rename questions
+data2 <- rename(data, c("What.house.are.you.affiliated.with."="House", "Race.ethnicity...may.select.multiple."="Race",
+                        "Gender.Identity." = "Gender.Identity", "Estimated.yearly.family.income" = "Family.Income", 
+                        "Do.you.receive.financial.aid.for.your.Dartmouth.tuition." = "FinAid", "Estimated.average.financial.aid.award.for.each.award.year.at.Dartmouth." = "FinAid.amount",
+                        "Are.you.on.financial.aid.from.your.house." = "House.FinAid", "How.many.terms.have.you.been.applying.for.financial.aid.through.your.house." = "Terms.FinAid.House",
+                        "Please.rank.how.satisfied.you.are.with.your.house.s.aid.package." = "FinAid.Satisfaction",
+                        "Have.you.ever.been.promised.financial.aid.in.your.house.that.you.have.not.received." = "FinAid.Reneg",
+                        "Does.your.house.give.financial.aid.or.reduced.prices.for.additional.dues.such.as.social.funds..gear..formal..special.event.charges...check.all.that.apply." = "FinAid.Addi",
+                        "How.satisfied.are.you.with.what.how.your.house.prioritizes.financial.aid.above.other.expenses." = "FinAid.Priority",
+                        "In.your.house..do.you.feel.a.divide.among.girls.who.receive.financial.aid.and.those.who.do.not" = "FinAid.Divide",
+                        "Do.you.believe.there.is.a.difference.between.the.aid.packages.in.local.houses.and.national.houses." = "Local.National.Diff",
+                        "What.is.the.average.number.of.drinks.you.have.per.week" = "Av.Drinks",
+                        "Are.you.a.member.of.any.other.affinity.groups.on.campus..NAD..Latin.American.Student.Association..Black.Girls.Are.Magic..etc....Check.all.that.apply." = "Affinity.Group"))
+
+APhi <- filter(data2, House == "Alpha Phi")
+
+data3 <- group_by(data2, House) %>% 
+  summarise(avg = mean())
